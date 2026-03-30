@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 기념일 사전 🌍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F4EE;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE6;
+    --ink: #1A1814;
+    --ink2: #6B6560;
+    --ink3: #9E9890;
+    --accent: #2D5A3D;
+    --accent-light: #E8F0EA;
+    --border: rgba(26,24,20,0.10);
+    --border2: rgba(26,24,20,0.06);
+    --health:   #1D6B4E; --health-bg:   #E4F2EB;
+    --env:      #3D7A2F; --env-bg:      #E9F3E6;
+    --rights:   #4A3AA8; --rights-bg:   #EDEBFA;
+    --peace:    #1A5E9C; --peace-bg:    #E3EFF9;
+    --social:   #8B5A00; --social-bg:   #FBF0DC;
+    --culture:  #8B2A5A; --culture-bg:  #F7E5EF;
+    --edu:      #9C3A1A; --edu-bg:      #FAE9E3;
+    --dev:      #4A4A4A; --dev-bg:      #EBEBEB;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', sans-serif;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 28px 24px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .site-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: #fff;
+  }
+  .site-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .search-wrap {
+    position: relative;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+  }
+  #search {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    font-size: 14px;
+    font-family: var(--sans);
+    outline: none;
+    transition: border 0.2s, background 0.2s;
+  }
+  #search::placeholder { color: rgba(255,255,255,0.4); }
+  #search:focus { border-color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.17); }
+
+  /* ── CONTROLS ── */
+  .controls {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px 24px 0;
+  }
+  .mode-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+  .mode-label {
+    font-size: 12px;
+    color: var(--ink3);
+    font-weight: 500;
+    letter-spacing: 0.4px;
+    margin-right: 2px;
+  }
+  .mode-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink2);
+    font-size: 13px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .mode-btn:hover { background: var(--surface2); color: var(--ink); }
+  .mode-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .tab-row {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+  }
+  .tab {
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink2);
+    font-size: 12.5px;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab:hover { border-color: var(--accent); color: var(--accent); }
+  .tab.active {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border2);
+    margin: 0;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+  .count-info {
+    font-size: 12px;
+    color: var(--ink3);
+    margin-bottom: 16px;
+  }
+
+  /* ── MONTH SECTION ── */
+  .month-block { margin-bottom: 28px; }
+  .month-heading {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 8px 0 10px;
+    border-bottom: 1.5px solid var(--ink);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .month-count {
+    font-size: 11px;
+    font-family: var(--sans);
+    font-weight: 400;
+    color: var(--ink3);
+  }
+
+  /* ── DAY ITEM ── */
+  .day-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius);
+    margin-bottom: 5px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+  }
+  .day-item:hover {
+    border-color: var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+  }
+  .day-date {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--ink3);
+    min-width: 32px;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .topic-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .day-link {
+    font-size: 13.5px;
+    color: var(--ink);
+    text-decoration: none;
+    flex: 1;
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+  .day-link:hover { color: var(--accent); }
+  .day-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 400;
+  }
+  .ext-icon {
+    color: var(--ink3);
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s;
+  }
+  .day-item:hover .ext-icon { opacity: 1; }
+
+  /* ── TOPIC SECTION ── */
+  .topic-block { margin-bottom: 24px; }
+  .topic-heading {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .topic-heading .t-count {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.7;
+    margin-left: auto;
+  }
+
+  /* topic color combos */
+  .t-health   { background: var(--health-bg);   color: var(--health);   }
+  .t-env      { background: var(--env-bg);     color: var(--env);     }
+  .t-rights   { background: var(--rights-bg);  color: var(--rights);  }
+  .t-peace    { background: var(--peace-bg);   color: var(--peace);   }
+  .t-social   { background: var(--social-bg);  color: var(--social);  }
+  .t-culture  { background: var(--culture-bg); color: var(--culture); }
+  .t-edu      { background: var(--edu-bg);     color: var(--edu);     }
+  .t-dev      { background: var(--dev-bg);     color: var(--dev);     }
+
+  .dot-health  { background: var(--health); }
+  .dot-env     { background: var(--env); }
+  .dot-rights  { background: var(--rights); }
+  .dot-peace   { background: var(--peace); }
+  .dot-social  { background: var(--social); }
+  .dot-culture { background: var(--culture); }
+  .dot-edu     { background: var(--edu); }
+  .dot-dev     { background: var(--dev); }
+
+  .badge-health  { background: var(--health-bg);   color: var(--health);   }
+  .badge-env     { background: var(--env-bg);     color: var(--env);     }
+  .badge-rights  { background: var(--rights-bg);  color: var(--rights);  }
+  .badge-peace   { background: var(--peace-bg);   color: var(--peace);   }
+  .badge-social  { background: var(--social-bg);  color: var(--social);  }
+  .badge-culture { background: var(--culture-bg); color: var(--culture); }
+  .badge-edu     { background: var(--edu-bg);     color: var(--edu);     }
+  .badge-dev     { background: var(--dev-bg);     color: var(--dev);     }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink3);
+  }
+  .empty .e-icon { font-size: 36px; margin-bottom: 12px; }
+  .empty p { font-size: 14px; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11.5px;
+    color: var(--ink3);
+    border-top: 1px solid var(--border2);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { padding: 18px 16px 16px; }
+    .controls { padding: 12px 16px 0; }
+    main { padding: 16px 16px 50px; }
+    .day-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-top">
+      <span class="site-title">세계 기념일 사전</span>
+      <span class="site-sub">UN · WHO · UNESCO 공식 지정</span>
+    </div>
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="6.5" cy="6.5" r="5" stroke="white" stroke-width="1.5"/>
+        <line x1="10.5" y1="10.5" x2="13.5" y2="13.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" id="search" placeholder="기념일 검색... (예: 환경, 여성, 건강)" oninput="renderContent()">
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="mode-row">
+    <span class="mode-label">보기</span>
+    <button class="mode-btn active" onclick="setMode('month',this)">월별</button>
+    <button class="mode-btn" onclick="setMode('topic',this)">주제별</button>
+  </div>
+  <div class="tab-row" id="tab-row"></div>
+</div>
+<hr class="divider">
+
+<main>
+  <div class="count-info" id="count-info"></div>
+  <div id="content"></div>
+</main>
+
+<footer>
+  출처: <a href="https://www.un.org/en/observances/list-days-weeks" target="_blank">United Nations</a> &nbsp;·&nbsp;
+  <a href="https://www.who.int/observances" target="_blank">WHO</a> &nbsp;·&nbsp;
+  <a href="https://www.unesco.org/en/days" target="_blank">UNESCO</a> &nbsp;·&nbsp;
+  <a href="https://www.fao.org/observances/en" target="_blank">FAO</a>
+</footer>
+
+<script>
+const DAYS = [
+  {date:"1/4",  month:1,  name:"세계 점자의 날",             topic:"edu",     url:"https://www.un.org/en/observances/braille-day"},
+  {date:"1/24", month:1,  name:"세계 교육의 날",              topic:"edu",     url:"https://www.un.org/en/observances/education-day"},
+  {date:"1/26", month:1,  name:"세계 청정에너지의 날",         topic:"env",     url:"https://www.un.org/en/observances/clean-energy-day"},
+  {date:"1/27", month:1,  name:"홀로코스트 희생자 추모의 날",    topic:"rights",  url:"https://www.un.org/en/observances/commemoration-holocaust-victims-day"},
+  {date:"2/2",  month:2,  name:"세계 습지의 날",              topic:"env",     url:"https://www.un.org/en/observances/world-wetlands-day"},
+  {date:"2/4",  month:2,  name:"세계 암의 날",               topic:"health",  url:"https://www.who.int/news-room/events/detail/2025/02/04/default-calendar/world-cancer-day"},
+  {date:"2/4",  month:2,  name:"세계 인류 우애의 날",          topic:"peace",   url:"https://www.un.org/en/observances/human-fraternity"},
+  {date:"2/6",  month:2,  name:"여성 성기 절제 근절의 날",      topic:"rights",  url:"https://www.un.org/en/observances/female-genital-mutilation-day"},
+  {date:"2/10", month:2,  name:"세계 두류(豆類)의 날",         topic:"dev",     url:"https://www.fao.org/world-pulses-day/en"},
+  {date:"2/11", month:2,  name:"여성·여아 과학의 날",          topic:"edu",     url:"https://www.un.org/en/observances/women-and-girls-in-science-day/"},
+  {date:"2/13", month:2,  name:"세계 라디오의 날",             topic:"culture", url:"https://www.un.org/en/observances/radio-day"},
+  {date:"2/20", month:2,  name:"세계 사회정의의 날",           topic:"social",  url:"https://www.un.org/en/observances/social-justice-day"},
+  {date:"2/21", month:2,  name:"세계 모국어의 날",             topic:"culture", url:"https://www.un.org/en/observances/mother-language-day"},
+  {date:"3/1",  month:3,  name:"세계 해초의 날",              topic:"env",     url:"https://www.un.org/en/observances/seagrass-day"},
+  {date:"3/1",  month:3,  name:"제로 차별의 날",              topic:"rights",  url:"https://www.unaids.org/en/zero-discrimination-day"},
+  {date:"3/3",  month:3,  name:"세계 야생동물의 날",           topic:"env",     url:"https://www.un.org/en/observances/world-wildlife-day"},
+  {date:"3/8",  month:3,  name:"세계 여성의 날",              topic:"rights",  url:"https://www.un.org/en/observances/womens-day"},
+  {date:"3/10", month:3,  name:"세계 여성 법관의 날",          topic:"rights",  url:"https://www.un.org/en/observances/women-judges-day"},
+  {date:"3/20", month:3,  name:"세계 행복의 날",              topic:"social",  url:"https://www.un.org/en/observances/happiness-day"},
+  {date:"3/21", month:3,  name:"세계 인종차별 철폐의 날",       topic:"rights",  url:"https://www.un.org/en/observances/end-racism-day"},
+  {date:"3/21", month:3,  name:"세계 시의 날",               topic:"culture", url:"https://www.unesco.org/en/days/poetry"},
+  {date:"3/21", month:3,  name:"세계 다운증후군의 날",          topic:"health",  url:"https://www.un.org/en/observances/down-syndrome-day"},
+  {date:"3/21", month:3,  name:"세계 숲의 날",               topic:"env",     url:"https://www.fao.org/international-day-of-forests/en"},
+  {date:"3/21", month:3,  name:"세계 빙하의 날",              topic:"env",     url:"https://www.un.org/en/observances/world-glaciers-day"},
+  {date:"3/22", month:3,  name:"세계 물의 날",               topic:"env",     url:"https://www.un.org/en/observances/water-day"},
+  {date:"3/23", month:3,  name:"세계 기상의 날",              topic:"env",     url:"https://wmo.int/about-wmo/world-meteorological-day"},
+  {date:"3/24", month:3,  name:"세계 결핵의 날",              topic:"health",  url:"https://www.who.int/campaigns/world-tb-day/"},
+  {date:"3/25", month:3,  name:"노예무역 희생자 추모의 날",      topic:"rights",  url:"https://www.un.org/en/observances/transatlantic-slave-trade"},
+  {date:"3/30", month:3,  name:"세계 제로 폐기물의 날",         topic:"env",     url:"https://www.un.org/en/observances/zero-waste-day"},
+  {date:"4/2",  month:4,  name:"세계 자폐증 인식의 날",         topic:"health",  url:"https://www.un.org/en/observances/autism-day"},
+  {date:"4/5",  month:4,  name:"세계 양심의 날",              topic:"peace",   url:"https://www.un.org/en/observances/conscience-day"},
+  {date:"4/6",  month:4,  name:"세계 스포츠·평화·발전의 날",     topic:"peace",   url:"https://www.un.org/en/observances/sport-day"},
+  {date:"4/7",  month:4,  name:"세계 보건의 날",              topic:"health",  url:"https://www.who.int/campaigns/world-health-day"},
+  {date:"4/12", month:4,  name:"세계 유인 우주비행의 날",        topic:"dev",     url:"https://www.un.org/en/observances/human-spaceflight-day"},
+  {date:"4/21", month:4,  name:"세계 창의·혁신의 날",          topic:"culture", url:"https://www.un.org/en/observances/creativity-and-innovation-day"},
+  {date:"4/22", month:4,  name:"세계 지구의 날",              topic:"env",     url:"https://www.un.org/en/observances/earth-day"},
+  {date:"4/23", month:4,  name:"세계 책과 저작권의 날",         topic:"culture", url:"https://www.unesco.org/en/days/world-book-and-copyright"},
+  {date:"4/25", month:4,  name:"세계 말라리아의 날",            topic:"health",  url:"https://www.who.int/campaigns/world-malaria-day/world-malaria-day-2021"},
+  {date:"4/26", month:4,  name:"세계 지식재산의 날",            topic:"dev",     url:"https://www.wipo.int/ip-outreach/en/ipday/"},
+  {date:"4/28", month:4,  name:"세계 산업안전보건의 날",         topic:"social",  url:"https://www.un.org/en/observances/work-safety-day"},
+  {date:"4/30", month:4,  name:"세계 재즈의 날",              topic:"culture", url:"https://www.un.org/en/observances/jazz-day"},
+  {date:"5/3",  month:5,  name:"세계 언론 자유의 날",           topic:"rights",  url:"https://www.un.org/en/observances/press-freedom-day"},
+  {date:"5/12", month:5,  name:"세계 식물 건강의 날",           topic:"env",     url:"https://www.fao.org/plant-health-day/en"},
+  {date:"5/15", month:5,  name:"세계 가족의 날",              topic:"social",  url:"https://www.un.org/en/observances/international-day-of-families"},
+  {date:"5/17", month:5,  name:"세계 전기통신·정보사회의 날",     topic:"dev",     url:"https://www.un.org/en/observances/telecommunication-day"},
+  {date:"5/20", month:5,  name:"세계 꿀벌의 날",              topic:"env",     url:"https://www.fao.org/world-bee-day/en"},
+  {date:"5/21", month:5,  name:"세계 차(茶)의 날",            topic:"culture", url:"https://www.fao.org/international-tea-day/en"},
+  {date:"5/21", month:5,  name:"세계 문화다양성·대화·발전의 날",   topic:"culture", url:"https://www.un.org/en/observances/cultural-diversity-day"},
+  {date:"5/22", month:5,  name:"세계 생물 다양성의 날",          topic:"env",     url:"https://www.un.org/en/observances/biological-diversity-day"},
+  {date:"5/29", month:5,  name:"세계 유엔 평화유지군의 날",       topic:"peace",   url:"https://www.un.org/en/observances/peacekeepers-day"},
+  {date:"5/31", month:5,  name:"세계 금연의 날",              topic:"health",  url:"https://www.who.int/campaigns/world-no-tobacco-day"},
+  {date:"6/3",  month:6,  name:"세계 자전거의 날",             topic:"social",  url:"https://www.un.org/en/observances/bicycle-day"},
+  {date:"6/5",  month:6,  name:"세계 환경의 날",              topic:"env",     url:"https://www.un.org/en/observances/environment-day"},
+  {date:"6/7",  month:6,  name:"세계 식품 안전의 날",           topic:"health",  url:"https://www.un.org/en/observances/food-safety-day"},
+  {date:"6/8",  month:6,  name:"세계 해양의 날",              topic:"env",     url:"https://www.un.org/en/observances/oceans-day"},
+  {date:"6/12", month:6,  name:"세계 아동 노동 반대의 날",        topic:"rights",  url:"https://www.un.org/en/observances/world-day-against-child-labour"},
+  {date:"6/14", month:6,  name:"세계 헌혈자의 날",             topic:"health",  url:"https://www.who.int/campaigns/world-blood-donor-day"},
+  {date:"6/15", month:6,  name:"세계 노인 학대 인식의 날",        topic:"rights",  url:"https://www.un.org/en/observances/elder-abuse-awareness-day"},
+  {date:"6/17", month:6,  name:"세계 사막화·가뭄 방지의 날",      topic:"env",     url:"https://www.un.org/en/observances/desertification-day"},
+  {date:"6/20", month:6,  name:"세계 난민의 날",              topic:"rights",  url:"https://www.un.org/en/observances/refugee-day"},
+  {date:"6/21", month:6,  name:"세계 요가의 날",              topic:"health",  url:"https://www.un.org/en/observances/yoga-day"},
+  {date:"6/23", month:6,  name:"세계 유엔 공공서비스의 날",        topic:"dev",     url:"https://www.un.org/en/observances/public-service-day"},
+  {date:"6/23", month:6,  name:"세계 과부의 날",              topic:"rights",  url:"https://www.un.org/en/observances/widows-day"},
+  {date:"6/26", month:6,  name:"세계 마약 남용·밀수 반대의 날",    topic:"health",  url:"https://www.unodc.org/unodc/en/international-day-against-drug-abuse.html"},
+  {date:"7/5",  month:7,  name:"세계 협동조합의 날",            topic:"dev",     url:"https://www.un.org/en/observances/cooperatives-day"},
+  {date:"7/11", month:7,  name:"세계 인구의 날",              topic:"dev",     url:"https://www.un.org/en/observances/world-population-day"},
+  {date:"7/15", month:7,  name:"세계 청년 기술의 날",           topic:"edu",     url:"https://www.un.org/en/observances/world-youth-skills-day"},
+  {date:"7/18", month:7,  name:"넬슨 만델라 국제의 날",          topic:"peace",   url:"https://www.un.org/en/observances/nelson-mandela-day"},
+  {date:"7/20", month:7,  name:"세계 체스의 날",              topic:"culture", url:"https://www.un.org/en/observances/world-chess-day"},
+  {date:"7/20", month:7,  name:"세계 달의 날",               topic:"dev",     url:"https://www.un.org/en/observances/moon-day"},
+  {date:"7/25", month:7,  name:"세계 익사 예방의 날",           topic:"health",  url:"https://www.who.int/news-room/events/detail/2025/07/25/default-calendar/world-drowning-prevention-day"},
+  {date:"7/28", month:7,  name:"세계 간염의 날",              topic:"health",  url:"https://www.who.int/campaigns/world-hepatitis-day"},
+  {date:"7/30", month:7,  name:"세계 인신매매 반대의 날",         topic:"rights",  url:"https://www.un.org/en/observances/end-human-trafficking-day"},
+  {date:"7/30", month:7,  name:"세계 우정의 날",              topic:"social",  url:"https://www.un.org/en/observances/friendship-day"},
+  {date:"8/9",  month:8,  name:"세계 토착민의 날",             topic:"rights",  url:"https://www.un.org/en/observances/indigenous-day"},
+  {date:"8/12", month:8,  name:"세계 청소년의 날",             topic:"social",  url:"https://www.un.org/en/observances/youth-day"},
+  {date:"8/19", month:8,  name:"세계 인도주의의 날",            topic:"peace",   url:"https://www.un.org/en/observances/humanitarian-day"},
+  {date:"8/21", month:8,  name:"테러 피해자 추모의 날",          topic:"peace",   url:"https://www.un.org/en/observances/terrorism-victims-day"},
+  {date:"8/29", month:8,  name:"핵실험 반대의 날",             topic:"peace",   url:"https://www.un.org/en/observances/nuclear-test-ban-day"},
+  {date:"8/30", month:8,  name:"강제실종 피해자의 날",           topic:"rights",  url:"https://www.un.org/en/observances/victims-enforced-disappearance"},
+  {date:"9/5",  month:9,  name:"세계 자선의 날",              topic:"social",  url:"https://www.un.org/en/observances/charity-day"},
+  {date:"9/7",  month:9,  name:"세계 맑은 공기의 날",           topic:"env",     url:"https://www.un.org/en/observances/clean-air-day"},
+  {date:"9/8",  month:9,  name:"세계 문해력의 날",             topic:"edu",     url:"https://www.un.org/en/observances/literacy-day"},
+  {date:"9/10", month:9,  name:"세계 자살 예방의 날",           topic:"health",  url:"https://www.who.int/news-room/events/detail/2025/09/10/default-calendar/world-suicide-prevention-day"},
+  {date:"9/15", month:9,  name:"세계 민주주의의 날",            topic:"peace",   url:"https://www.un.org/en/observances/democracy-day"},
+  {date:"9/16", month:9,  name:"세계 오존층 보호의 날",          topic:"env",     url:"https://www.un.org/en/observances/ozone-day"},
+  {date:"9/17", month:9,  name:"세계 환자 안전의 날",           topic:"health",  url:"https://www.who.int/news-room/events/detail/2025/09/17/default-calendar/world-patient-safety-day"},
+  {date:"9/18", month:9,  name:"세계 동일 임금의 날",           topic:"rights",  url:"https://www.un.org/en/observances/equal-pay-day"},
+  {date:"9/21", month:9,  name:"세계 평화의 날",              topic:"peace",   url:"https://www.un.org/en/observances/international-day-peace"},
+  {date:"9/26", month:9,  name:"세계 핵무기 전면 철폐의 날",      topic:"peace",   url:"https://www.un.org/en/observances/nuclear-weapons-elimination-day"},
+  {date:"9/27", month:9,  name:"세계 관광의 날",              topic:"dev",     url:"https://www.unwto.org/world-tourism-day"},
+  {date:"10/1", month:10, name:"세계 노인의 날",              topic:"social",  url:"https://www.un.org/en/observances/older-persons-day"},
+  {date:"10/2", month:10, name:"세계 비폭력의 날",             topic:"peace",   url:"https://www.un.org/en/observances/non-violence-day"},
+  {date:"10/5", month:10, name:"세계 교사의 날",              topic:"edu",     url:"https://www.un.org/en/observances/teachers-day"},
+  {date:"10/9", month:10, name:"세계 우편의 날",              topic:"dev",     url:"https://www.upu.int/en/World-Post-Day"},
+  {date:"10/10",month:10, name:"세계 정신건강의 날",            topic:"health",  url:"https://www.who.int/campaigns/world-mental-health-day"},
+  {date:"10/11",month:10, name:"세계 여아의 날",              topic:"rights",  url:"https://www.un.org/en/observances/girl-child-day"},
+  {date:"10/13",month:10, name:"세계 재난위험 감소의 날",         topic:"dev",     url:"https://www.un.org/en/observances/disaster-risk-reduction-day"},
+  {date:"10/16",month:10, name:"세계 식량의 날",              topic:"dev",     url:"https://www.fao.org/world-food-day/en"},
+  {date:"10/17",month:10, name:"세계 빈곤 퇴치의 날",           topic:"social",  url:"https://www.un.org/en/observances/day-for-eradicating-poverty"},
+  {date:"10/24",month:10, name:"세계 유엔의 날",              topic:"peace",   url:"https://www.un.org/en/observances/un-day"},
+  {date:"10/31",month:10, name:"세계 도시의 날",              topic:"dev",     url:"https://www.un.org/en/observances/world-cities-day"},
+  {date:"11/2", month:11, name:"언론인 범죄 처벌 면제 반대의 날",  topic:"rights",  url:"https://www.un.org/en/observances/end-impunity-crimes-against-journalists"},
+  {date:"11/5", month:11, name:"세계 쓰나미 인식의 날",          topic:"dev",     url:"https://www.un.org/en/observances/tsunami-awareness-day"},
+  {date:"11/10",month:11, name:"세계 과학·평화·발전의 날",        topic:"edu",     url:"https://www.un.org/en/observances/world-science-day"},
+  {date:"11/14",month:11, name:"세계 당뇨병의 날",             topic:"health",  url:"https://www.who.int/news-room/events/detail/2025/11/14/default-calendar/world-diabetes-day"},
+  {date:"11/16",month:11, name:"세계 관용의 날",              topic:"peace",   url:"https://www.un.org/en/observances/tolerance-day"},
+  {date:"11/19",month:11, name:"세계 화장실의 날",             topic:"dev",     url:"https://www.un.org/en/observances/toilet-day"},
+  {date:"11/20",month:11, name:"세계 아동의 날",              topic:"rights",  url:"https://www.un.org/en/observances/world-childrens-day"},
+  {date:"11/25",month:11, name:"세계 여성폭력 철폐의 날",         topic:"rights",  url:"https://www.un.org/en/observances/ending-violence-against-women-day"},
+  {date:"11/30",month:11, name:"세계 컴퓨터 보안의 날",          topic:"dev",     url:"https://www.un.org/en/observances/information-security-day"},
+  {date:"12/1", month:12, name:"세계 에이즈의 날",             topic:"health",  url:"https://www.who.int/campaigns/world-aids-day"},
+  {date:"12/2", month:12, name:"세계 노예제 폐지의 날",          topic:"rights",  url:"https://www.un.org/en/observances/slavery-abolition-day"},
+  {date:"12/3", month:12, name:"세계 장애인의 날",             topic:"rights",  url:"https://www.un.org/en/observances/day-of-persons-with-disabilities"},
+  {date:"12/5", month:12, name:"세계 자원봉사자의 날",           topic:"social",  url:"https://www.un.org/en/observances/volunteer-day"},
+  {date:"12/5", month:12, name:"세계 토양의 날",              topic:"env",     url:"https://www.fao.org/world-soil-day/en"},
+  {date:"12/9", month:12, name:"세계 반부패의 날",             topic:"peace",   url:"https://www.un.org/en/observances/anti-corruption-day"},
+  {date:"12/10",month:12, name:"세계 인권의 날",              topic:"rights",  url:"https://www.un.org/en/observances/human-rights-day"},
+  {date:"12/11",month:12, name:"세계 산의 날",               topic:"env",     url:"https://www.un.org/en/observances/mountain-day"},
+  {date:"12/12",month:12, name:"세계 보편적 건강보장의 날",        topic:"health",  url:"https://www.who.int/campaigns/world-health-coverage-day"},
+  {date:"12/18",month:12, name:"세계 이주민의 날",             topic:"rights",  url:"https://www.un.org/en/observances/migrants-day"},
+  {date:"12/20",month:12, name:"세계 인간 연대의 날",           topic:"social",  url:"https://www.un.org/en/observances/human-solidarity-day"},
+];
+
+const MONTHS = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+const TOPICS = {
+  health:  {label:"🏥 건강·의료",  emoji:"🏥"},
+  env:     {label:"🌿 환경·자연",  emoji:"🌿"},
+  rights:  {label:"⚖️ 인권·평등",  emoji:"⚖️"},
+  peace:   {label:"🕊️ 평화·안보",  emoji:"🕊️"},
+  social:  {label:"🤝 사회·복지",  emoji:"🤝"},
+  culture: {label:"🎨 문화·언어",  emoji:"🎨"},
+  edu:     {label:"📚 교육·과학",  emoji:"📚"},
+  dev:     {label:"🌐 개발·경제",  emoji:"🌐"},
+};
+
+let mode = 'month';
+let activeFilter = 0; // month: 0=all, 1-12; topic: ''=all
+
+function setMode(m, btn) {
+  mode = m;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = (m === 'month') ? 0 : '';
+  buildTabs();
+  renderContent();
+}
+
+function buildTabs() {
+  const row = document.getElementById('tab-row');
+  row.innerHTML = '';
+  if (mode === 'month') {
+    addTab(row, '전체', 0);
+    MONTHS.forEach((m, i) => addTab(row, m, i + 1));
+  } else {
+    addTab(row, '전체', '');
+    Object.entries(TOPICS).forEach(([k, v]) => addTab(row, v.label, k));
+  }
+}
+
+function addTab(row, label, val) {
+  const b = document.createElement('button');
+  b.className = 'tab' + (activeFilter === val ? ' active' : '');
+  b.textContent = label;
+  b.onclick = () => { activeFilter = val; refreshTabs(); renderContent(); };
+  row.appendChild(b);
+}
+
+function refreshTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  if (mode === 'month') {
+    const vals = [0, ...Array(12).keys().map(i => i+1)];
+    tabs.forEach((t, i) => t.classList.toggle('active', vals[i] === activeFilter));
+  } else {
+    const vals = ['', ...Object.keys(TOPICS)];
+    tabs.forEach((t, i) => t.classList.toggle('active', vals[i] === activeFilter));
+  }
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderContent() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  let data = DAYS.filter(d => !q || d.name.toLowerCase().includes(q) || d.date.includes(q));
+
+  const content = document.getElementById('content');
+  const info = document.getElementById('count-info');
+  content.innerHTML = '';
+
+  if (!data.length) {
+    content.innerHTML = '<div class="empty"><div class="e-icon">🔍</div><p>검색 결과가 없습니다.</p></div>';
+    info.textContent = '';
+    return;
+  }
+
+  let total = 0;
+
+  if (mode === 'month') {
+    const months = activeFilter === 0 ? [1,2,3,4,5,6,7,8,9,10,11,12] : [activeFilter];
+    months.forEach(m => {
+      const items = data.filter(d => d.month === m);
+      if (!items.length) return;
+      total += items.length;
+      const block = document.createElement('div');
+      block.className = 'month-block';
+      block.innerHTML = `<div class="month-heading">${MONTHS[m-1]}<span class="month-count">${items.length}개</span></div>`;
+      const list = document.createElement('div');
+      items.forEach(d => list.appendChild(makeDayItem(d, false)));
+      block.appendChild(list);
+      content.appendChild(block);
+    });
+  } else {
+    const topics = activeFilter === '' ? Object.keys(TOPICS) : [activeFilter];
+    topics.forEach(tk => {
+      const items = data.filter(d => d.topic === tk).sort((a,b)=>a.month-b.month||(+a.date.split('/')[1])-(+b.date.split('/')[1]));
+      if (!items.length) return;
+      total += items.length;
+      const t = TOPICS[tk];
+      const block = document.createElement('div');
+      block.className = 'topic-block';
+      block.innerHTML = `<div class="topic-heading t-${tk}">${t.label}<span class="t-count">${items.length}개</span></div>`;
+      const list = document.createElement('div');
+      items.forEach(d => list.appendChild(makeDayItem(d, true)));
+      block.appendChild(list);
+      content.appendChild(block);
+    });
+  }
+
+  info.textContent = `총 ${total}개 항목`;
+}
+
+function makeDayItem(d, showMonth) {
+  const div = document.createElement('div');
+  div.className = 'day-item';
+  const dateLabel = showMonth ? `${MONTHS[d.month-1].replace('월','')}/${d.date.split('/')[1]}` : d.date.split('/')[1]+'일';
+  div.innerHTML = `
+    <span class="day-date">${dateLabel}</span>
+    <span class="topic-dot dot-${d.topic}"></span>
+    <a class="day-link" href="${escHtml(d.url)}" target="_blank" rel="noopener">${escHtml(d.name)}</a>
+    <span class="day-badge badge-${d.topic}">${TOPICS[d.topic].emoji} ${TOPICS[d.topic].label.split(' ')[1]||''}</span>
+    <svg class="ext-icon" width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 9L9 2M9 2H4.5M9 2V6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  `;
+  return div;
+}
+
+// init
+buildTabs();
+renderContent();
+</script>
+</body>
+</html>
